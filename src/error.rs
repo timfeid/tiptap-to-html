@@ -3,30 +3,32 @@ use std::fmt;
 
 // A generic error type for Tiptap
 #[derive(PartialEq)]
-pub enum TiptapError {
+pub enum ProseMirrorError {
     TypeNotFound { type_name: Option<String> },
     // You could add more error types here
 }
 
-impl fmt::Display for TiptapError {
+impl fmt::Display for ProseMirrorError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            TiptapError::TypeNotFound { type_name } => write!(f, "Type not found: {:?}", type_name),
+            ProseMirrorError::TypeNotFound { type_name } => {
+                write!(f, "Type not found: {:?}", type_name)
+            }
         }
     }
 }
 
-impl fmt::Debug for TiptapError {
+impl fmt::Debug for ProseMirrorError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         fmt::Display::fmt(self, f)
     }
 }
 
-impl Error for TiptapError {}
+impl Error for ProseMirrorError {}
 
-impl From<TypeNotFound> for TiptapError {
+impl From<TypeNotFound> for ProseMirrorError {
     fn from(err: TypeNotFound) -> Self {
-        TiptapError::TypeNotFound {
+        ProseMirrorError::TypeNotFound {
             type_name: err.type_name,
         }
     }
